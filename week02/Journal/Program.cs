@@ -8,28 +8,38 @@ class Program
         PromptGenerator promptGenerator = new PromptGenerator();
 
         string choice = "";
-        while (choice != "5")
+        while (choice != "6")
         {
-            Console.WriteLine("Journal Menu");
+            Console.WriteLine("\nJournal Menu");
             Console.WriteLine("1. Write a new entry");
             Console.WriteLine("2. Display the journal");
             Console.WriteLine("3. Save the journal to a file");
             Console.WriteLine("4. Load the journal from a file");
-            Console.WriteLine("5. Quit");
+            //Exceeding Requirements
+            Console.WriteLine("5. Review a random past entry");
+            Console.WriteLine("6. Quit");
             Console.Write("Choose an option: ");
             choice = Console.ReadLine();
 
             if (choice == "1")
             {
                 string prompt = promptGenerator.GetRandomPrompt();
-                Console.WriteLine(prompt);
+                Console.WriteLine($"\n{prompt}");
                 Console.Write("Your response: ");
                 string response = Console.ReadLine();
+
+                Console.Write("Rate your mood (1 = low, 5 = high): ");
+                int mood = int.Parse(Console.ReadLine());
+
+                Console.Write("Add tags (comma separated, e.g., family, work): ");
+                string tags = Console.ReadLine();
 
                 Entry entry = new Entry();
                 entry._date = DateTime.Now.ToShortDateString();
                 entry._promptText = prompt;
                 entry._entryText = response;
+                entry._moodRating = mood;
+                entry._tags = tags;
 
                 theJournal.AddEntry(entry);
             }
@@ -53,11 +63,15 @@ class Program
             }
             else if (choice == "5")
             {
-                Console.WriteLine("Goodbye!");
+                theJournal.DisplayRandomEntry();
+            }
+            else if (choice == "6")
+            {
+                Console.WriteLine("Bye!");
             }
             else
             {
-                Console.WriteLine("Invalid choice, try again.");
+                Console.WriteLine("No valid choice, please try again.");
             }
         }
     }

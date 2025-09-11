@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+
 public class Journal
 {
     private List<Entry> _entries = new List<Entry>();
+
     public void AddEntry(Entry entry)
     {
         _entries.Add(entry);
@@ -34,5 +36,18 @@ public class Journal
             Entry entry = Entry.FromString(line);
             _entries.Add(entry);
         }
+    }
+    public void DisplayRandomEntry()
+    {
+        if (_entries.Count == 0)
+        {
+            Console.WriteLine("No entries to show.");
+            return;
+        }
+
+        Random rand = new Random();
+        int index = rand.Next(_entries.Count);
+        Console.WriteLine("Random past entry:\n");
+        _entries[index].Display();
     }
 }
